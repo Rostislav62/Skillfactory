@@ -1,0 +1,85 @@
+# Игра крестики нолики
+# Итоговое задание 7.6.1 (HW-02)
+# Студент Ростислав Шмиглюк
+userN = 'x'
+# N = int(input("Введите размер матрицы: "))
+N = 3
+print(f'Начинает игрок {userN}' )
+print()
+matrix = [['-' for i in range(N)] for j in range(N)]
+row = 0
+col = 0
+# Функция ввода координат
+def coordinate(N, lin):
+    n = input(f"Введите координату по {lin}")
+    if int(n) > N:
+        print(f'Вы можете вводить цифры от 0 до {N}')
+        n = input(f"Введите координату по {lin}")
+    return n
+def input_coordinate(N):
+    a = coordinate(N, 'горизонтали: ')
+    b = coordinate(N, 'вертикали: ')
+    is_free_cell(a, b)
+    return a, b
+
+def is_free_cell(row,col):
+    if matrix[int(row)][int(col)] == 'x':
+        print(f'Эта координата уже занята игроком x')
+        input_coordinate(N)
+    elif matrix[int(row)][int(col)] == 'o':
+        print(f'Эта координата уже занята игроком o')
+        input_coordinate(N)
+
+def change_user(userN):
+    if userN == 'x':
+        userN = 'o'
+    else:
+        if userN == 'o':
+            userN = 'x'
+    return userN
+
+def fill_matrix(row, col):
+    for i in matrix:
+        matrix[int(row)][int(col)] = userN
+        print(*i)
+
+def check_for_win(matrixA, row, col):
+    # ************************************************
+    res = False
+    if matrixA[0][0] == matrixA[0][1] == matrixA[0][2] != '-': # horizontal top
+        res = True
+    if res == False:
+        if matrixA[1][0] == matrixA[1][1] == matrixA[1][2] != '-': # horizontal 2
+            res = True
+    if res == False:
+        if matrixA[2][0] == matrixA[2][1] == matrixA[2][2] != '-': # horizontal down
+            res = True
+    if res == False:
+        if matrixA[0][0] == matrixA[1][1] == matrixA[2][2] != '-': # diagonale left top
+            res = True
+    if res == False:
+        if matrixA[0][2] == matrixA[1][1] == matrixA[2][0] != '-': # diagonale right down
+            res = True
+    if res == False:
+        if matrixA[0][0] == matrixA[1][0] == matrixA[2][0] != '-': # Vertical 1
+            res = True
+    if res == False:
+        if matrixA[0][1] == matrixA[1][1] == matrixA[2][1] != '-': # Vertical 2
+            res = True
+    if res == False:
+        if matrixA[0][2] == matrixA[1][2] == matrixA[2][2] != '-': # Vertical 3
+            res = True
+
+    return res
+# *************************************************
+while True:
+    print()
+    print(f'Теперь вводит игрок: {userN}')
+    row, col = input_coordinate(N)
+    print()
+    fill_matrix(row, col)
+    check_for_win(matrix, row, col)
+    if check_for_win(matrix, row, col):
+        print(f'Выиграл игрок {userN}')
+        break
+    userN = change_user(userN)
