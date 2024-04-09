@@ -7,11 +7,15 @@
 # проверка на занятость клетки.
 # Игра корректно завершается при победе одной из сторон.
 #
-# Однако,
-# 1. вывод игрового поля не соответствует шаблону, отсутствует нумерация строк и столбцов.
-# 2. Не проверяется ввод нечисловых значений,
-# 3. случайный ввод пустого значения нажатием Enter приводит к падению программы.
-# 4. Игра не завершается при ничейном результате.
+# # Однако,
+# # 1. вывод игрового поля не соответствует шаблону, отсутствует нумерация строк и столбцов. 
+# Сделано
+# # 2. Не проверяется ввод нечисловых значений,
+# Сделано
+# # 3. случайный ввод пустого значения нажатием Enter приводит к падению программы.
+# Устраненно
+# # 4. Игра не завершается при ничейном результате.
+# Сделано
 
 
 game_ = 'Крестики и нолики' # Game`s name
@@ -74,6 +78,8 @@ for i in range(matrix_size + 1):
         if j == 0 and i > 0:
             matrix[i][0] = i - 1
 
+for i in matrix:
+    print(*i)
 
 def message_wrong_coordinate(m_size):
     print("Вы ввели неправильную координату")
@@ -109,7 +115,7 @@ def is_free_cell(row_coordinate, col_coordinate):
     if matrix[int(row_coordinate)][int(col_coordinate)] == 'x':
         print(f'Эта координата уже занята игроком x')
         input_coordinate(N)
-    elif matrix[int(col_coordinate)][int(col_coordinate)] == 'o':
+    elif matrix[int(row_coordinate)][int(col_coordinate)] == 'o':
         print(f'Эта координата уже занята игроком o')
         input_coordinate(N)
 
@@ -118,7 +124,6 @@ def is_free_cell(row_coordinate, col_coordinate):
 def change_user(user_name_):
     if user_name_ == 'x':
         user_name_ = 'o'
-
     else:
         if user_name_ == 'o':
             user_name_ = 'x'
@@ -131,7 +136,7 @@ def fill_matrix(user_nm, row_, col_, step_):
         matrix[int(row_)][int(col_)] = user_nm
         print(*i)
     step_ += 1
-    print(f'Step nr {step_}')
+    # print(f'Step nr {step_}')
     return step_
 
 
@@ -201,15 +206,15 @@ def win_player_o():
 
 #  Функция проверки если ничья
 def both_win():
-    print(f'**************************************')
+    print(f'***************************************')
     print(f'')
-    print(f'*********  Ничья ***********')
-    print(f'*********  Выиграли оба игрока  ***********')
+    print(f'**************  Ничья *****************')
+    print(f'********  Никто не проиграл  **********')
     print(f'')
-    print(f'**************************************')
+    print(f'***************************************')
     print(f'')
-    print(f'**************************************')
-    print(f'************  конец игры! ************')
+    print(f'***************************************')
+    print(f'************  конец игры! *************')
 
 
 def check_for_win(step, matrix_, won_x, won_o):
@@ -228,7 +233,7 @@ def check_for_win(step, matrix_, won_x, won_o):
 
 def who_won(step_):
     res = False
-    if step_ == 6 or step_ == 8 or step_ == 9:
+    if step_ == 6 or step_ == 8:
         if winner_x and not winner_o:
             win_player_x()
             res = True
@@ -238,7 +243,13 @@ def who_won(step_):
         if winner_x and winner_o:
             both_win()
             res = True
+    if step_ == 9:
+        if winner_x and winner_o or not winner_x and not winner_o:
+            both_win()
+            res = True
     return res
+
+
 while True:
     print()
     print(f'Теперь вводит игрок: {userN}')
