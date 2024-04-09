@@ -209,13 +209,23 @@ def both_win():
     print(f'***************************************')
     print(f'')
     print(f'**************  Ничья *****************')
-    print(f'********  Никто не проиграл  **********')
+    print(f'*******  Выиграли оба игрока  *********')
     print(f'')
     print(f'***************************************')
     print(f'')
     print(f'***************************************')
     print(f'************  конец игры! *************')
 
+def nobody_win():
+    print(f'***************************************')
+    print(f'')
+    print(f'**************  Ничья *****************')
+    print(f'********  Никто не проиграл  **********')
+    print(f'')
+    print(f'***************************************')
+    print(f'')
+    print(f'***************************************')
+    print(f'************  конец игры! *************')
 
 def check_for_win(step, matrix_, won_x, won_o):
     if step == 5:
@@ -233,7 +243,7 @@ def check_for_win(step, matrix_, won_x, won_o):
 
 def who_won(step_):
     res = False
-    if step_ == 6 or step_ == 8:
+    if step_ == 6 or step_ == 8 or step_ == 9:
         if winner_x and not winner_o:
             win_player_x()
             res = True
@@ -244,11 +254,14 @@ def who_won(step_):
             both_win()
             res = True
     if step_ == 9:
-        if winner_x and winner_o or not winner_x and not winner_o:
+        if winner_x and winner_o:
             both_win()
             res = True
+        else:
+            if not winner_x and not winner_o:
+                nobody_win()
+                res = True
     return res
-
 
 while True:
     print()
