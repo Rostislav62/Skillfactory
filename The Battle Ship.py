@@ -137,7 +137,7 @@ class Board:
                     self.count += 1
                     self.contour(ship, verb=True)
                     print("Ship is destroyed!!!")
-                    return False
+                    return True
                 else:
                     print("The ship is wounded!")
                     return True
@@ -184,12 +184,13 @@ class User(Player):
             cords = input("Your turn:").split()
 
             if len(cords) != 2:
-                print("Enter 2 coordinates separated by a space:")
+                print("You must only enter numbers from 1 to 6:")
                 continue
             x, y = cords
 
             if not (x.isdigit()) or not (y.isdigit()):
-                print("Enter only numbers from 1 to 6:")
+                print("You must only enter numbers from 1 to 6:")
+                continue
             x, y = int(x), int(y)
             return Dot(x - 1, y - 1)
 
@@ -237,6 +238,7 @@ class Game:
         print(f'Input format: x y.')
         print(f'x - number of the row.')
         print(f'y - number of the column.')
+        print("You must only enter numbers from 1 to 6:")
         print(f'****************************************************************')
         print()
         print(f'                          START ')
