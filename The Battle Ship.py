@@ -184,12 +184,12 @@ class User(Player):
             cords = input("Your turn:").split()
 
             if len(cords) != 2:
-                print("You must only enter numbers from 1 to 6:")
+                print("You can only enter 2 digits from 1 to 6 separated by a space:")
                 continue
             x, y = cords
 
             if not (x.isdigit()) or not (y.isdigit()):
-                print("You must only enter numbers from 1 to 6:")
+                print("You can only enter 2 digits from 1 to 6 separated by a space:")
                 continue
             x, y = int(x), int(y)
             return Dot(x - 1, y - 1)
